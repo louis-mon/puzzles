@@ -15,7 +15,7 @@ function firstDigitsOfFibonacci(n: number): number {
   return Math.floor(Math.pow(10, 8 + mantissa));
 }
 
-function solution() {
+function solution(): number {
   let f0 = 1;
   let f = 1;
   let k = 2;
@@ -33,4 +33,4 @@ function solution() {
   }
 }
 
-console.log(benchmark(() => solution()));
+console.log(solution());
