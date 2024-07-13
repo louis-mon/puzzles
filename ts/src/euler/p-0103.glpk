@@ -1,0 +1,37 @@
+param n := 7;
+set I := 1..n;
+param M := 10000;  # a sufficiently large constant
+param epsilon := 1;  # a small positive constant to ensure strict inequality
+
+var x{i in I} >= 0 integer;
+
+var delta{i in I, j in I, k in I, l in I: j > i and l > k and k > i and k <> j and l <> j}, binary;  # binary variable
+
+var delta2{i in I, j in I, k in I, l in I, m in I, p in I:
+    j > i and k > j and m > l and p > m and l > i and l <> j and l <> k and m <> j and m <> k and p <> j and p <> k}, binary;  # binary variable
+
+
+minimize z: sum{i in I} x[i];
+
+s.t. c1{i in I: i < n}: x[i+1]>=x[i]+1;
+
+# Constraints to model x[i] + x[j] != x[k] + x[l] for all distinct i, j, k, l
+s.t. abs_diff_pos{i in I, j in I, k in I, l in I: j > i and l > k and k > i and k <> j and l <> j}:
+(x[i] + x[j]) - (x[k] + x[l]) <=-epsilon+M*delta[i,j,k,l];
+
+s.t. abs_diff_neg{i in I, j in I, k in I, l in I: j > i and l > k and k > i and k <> j and l <> j}:
+(x[i] + x[j]) - (x[k] + x[l]) >=epsilon-(1-delta[i,j,k,l])*M;
+
+
+# Constraints to model x[i] + x[j] + x[k] != x[l] + x[m] + x[p] for all distinct i, j, k, l, m, p
+s.t. abs_diff_pos2{i in I, j in I, k in I, l in I, m in I, p in I:
+    j > i and k > j and m > l and p > m and l > i and l <> j and l <> k and m <> j and m <> k and p <> j and p <> k}:
+(x[i] + x[j] + x[k]) - (x[l] + x[m] + x[p]) <= -epsilon+M*delta2[i,j,k,l,m,p];
+
+s.t. abs_diff_neg2{i in I, j in I, k in I, l in I, m in I, p in I:
+    j > i and k > j and m > l and p > m and l > i and l <> j and l <> k and m <> j and m <> k and p <> j and p <> k}:
+(x[i] + x[j] + x[k]) - (x[l] + x[m] + x[p]) >= epsilon-(1-delta2[i,j,k,l,m,p])*M;
+
+s.t. ineq{i in 2..(n+1)/2}: sum{j in 1..i} x[j] >= 1 + sum{j in (n-i+2)..n} x[j];
+
+end;
