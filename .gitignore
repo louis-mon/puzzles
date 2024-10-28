@@ -1,3 +1,6 @@
+.idea
+rust/target
+
 # Logs
 logs
 *.log
