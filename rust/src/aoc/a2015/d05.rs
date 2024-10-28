@@ -66,16 +66,13 @@ fn has_interwind(s: &str) -> bool {
 }
 
 fn has_repeat(s: &str) -> bool {
-    let mut lc: char = 'a';
-    for (i, c) in s.chars().enumerate() {
+    for (i, _) in s.chars().enumerate() {
         if i == 0 {
-            lc = c;
             continue;
         }
         if s[(i + 1)..].contains(&s[(i - 1)..=i]) {
             return true;
         }
-        lc = c;
     }
     false
 }
