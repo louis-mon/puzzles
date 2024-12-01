@@ -43,4 +43,4 @@ function findInTags(input: string[], tags: string[]): string[] {
   return [...resultSet];
 }
 
-console.log(findInTags(stream, ["e"]));
+console.log(findInTags(stream, ["a", "b"]));

@@ -23,7 +23,10 @@ pub fn get_stats(values: &Vec<i32>) -> Stats {
             mode = Some(key);
         }
     }
-    Stats { mode: mode.unwrap_or(0), median }
+    Stats {
+        mode: mode.unwrap_or(0),
+        median,
+    }
 }
 
 pub fn to_pig_latin(s: &str) -> String {

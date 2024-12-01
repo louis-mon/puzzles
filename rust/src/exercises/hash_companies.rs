@@ -11,7 +11,11 @@ fn add_user_to_company(state: &mut State, input: &mut SplitWhitespace) -> () {
     input.next().expect("bad format");
     let company: String = String::from(input.next().expect("no company"));
     println!("Added {user} to {company}");
-    state.employees.entry(company).or_insert(BTreeSet::new()).insert(user);
+    state
+        .employees
+        .entry(company)
+        .or_insert(BTreeSet::new())
+        .insert(user);
 }
 
 fn list_peoples_of_company(state: &State, company: &String) {
@@ -21,7 +25,9 @@ fn list_peoples_of_company(state: &State, company: &String) {
 }
 
 pub fn hash_companies() {
-    let mut state: State = State { employees: BTreeMap::new() };
+    let mut state: State = State {
+        employees: BTreeMap::new(),
+    };
     loop {
         let mut input = String::new();
         io::stdin().read_line(&mut input).expect("no input");
@@ -30,9 +36,9 @@ pub fn hash_companies() {
             "Add" => add_user_to_company(&mut state, &mut split),
             "List" => match split.next() {
                 Some(company) => list_peoples_of_company(&state, &String::from(company)),
-                None => println!("{:#?}", &state.employees)
-            }
-            _ => println!("invalid command")
+                None => println!("{:#?}", &state.employees),
+            },
+            _ => println!("invalid command"),
         }
     }
 }

@@ -2,9 +2,10 @@ use std::collections::HashSet;
 use std::fs;
 
 pub fn run() {
-    println!("{}", solve2(
-        fs::read_to_string("src/aoc/a2015/d03.input").unwrap()
-    ))
+    println!(
+        "{}",
+        solve2(fs::read_to_string("src/aoc/a2015/d03.input").unwrap())
+    )
 }
 
 pub fn solve(s: String) -> usize {

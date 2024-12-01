@@ -2,9 +2,11 @@ use std::collections::HashSet;
 use std::fs;
 
 pub fn run() {
-    println!("{}", solve(fs::read_to_string("src/aoc/a2015/d05.input").unwrap()))
+    println!(
+        "{}",
+        solve(fs::read_to_string("src/aoc/a2015/d05.input").unwrap())
+    )
 }
-
 
 fn count_vowels(s: &str) -> usize {
     let vowels: HashSet<char> = HashSet::from(['a', 'e', 'i', 'o', 'u']);
@@ -32,8 +34,7 @@ fn has_no_special(s: &str) -> bool {
 }
 
 fn is_nice(s: &str) -> bool {
-    count_vowels(s) >= 3 && has_doubles(s)
-        && has_no_special(s)
+    count_vowels(s) >= 3 && has_doubles(s) && has_no_special(s)
 }
 
 fn solve(input: String) -> usize {
