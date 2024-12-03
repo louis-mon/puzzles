@@ -10,6 +10,8 @@ pub mod aoc {
     }
     pub mod a2024 {
         pub mod d01;
+        pub mod d02;
+        pub mod d03;
     }
     pub mod common {
         pub mod input;
