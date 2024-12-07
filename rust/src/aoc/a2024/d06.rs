@@ -57,8 +57,6 @@ fn positions_on_path(grid: &Grid<char>) -> HashSet<GridPoint> {
 pub fn run1() {
     let grid = Grid::from_str(&read_day_input!());
 
-    let start_pos = grid.find_point('^').unwrap();
-
     let found_pos = positions_on_path(&grid);
     println!("{}", found_pos.len());
 }
