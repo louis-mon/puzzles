@@ -1,45 +1,64 @@
-use crate::aoc::common::input::{parse_int, parse_long, split_2};
+use crate::aoc::common::grid::Grid;
+use crate::aoc::common::grid_point::GridPoint;
 use crate::read_day_input;
-
-fn test_line(input: &str) -> i64 {
-    let (res, ops_str) = split_2(input, ": ");
-    let res = parse_long(res);
-    let ops: Vec<i64> = ops_str.split_whitespace().map(parse_long).collect();
-    if test_operation(res, ops[0], &ops[1..ops.len()]) {
-        res
-    } else {
-        0
-    }
-}
-
-fn sym_to_op(op: char) -> impl Fn(i64, i64) -> i64 {
-    match op {
-        '+' => |x, y| x + y,
-        '*' => |x, y| x * y,
-        '|' => |x, y| parse_long(&format!("{x}{y}")),
-        _ => panic!("unsupported"),
-    }
-}
-
-fn test_operation(target: i64, result: i64, operands: &[i64]) -> bool {
-    match operands.first() {
-        Some(first) => {
-            for op in ['+', '*', '|'] {
-                let applied = sym_to_op(op)(result, *first as i64);
-                if test_operation(target, applied, &operands[1..operands.len()]) {
-                    return true;
-                }
-            }
-            false
-        }
-        None => target == result,
-    }
-}
-
-fn solve(input: &str) -> i64 {
-    input.lines().map(test_line).sum()
-}
+use std::collections::HashSet;
 
 pub fn run() {
-    println!("{}", solve(&read_day_input!()))
+    let grid = Grid::from_str(&read_day_input!());
+
+    let start_pos = grid.find_point('^').unwrap();
+    let on_path = positions_on_path(&grid);
+
+    let mut possible_obstacles = 0;
+
+    'obstacle: for (obstacle_pos) in on_path {
+        if obstacle_pos == start_pos {
+            continue;
+        }
+        let mut found_pos = HashSet::<(GridPoint, GridPoint)>::new();
+        let mut curr_pos = start_pos;
+        let mut curr_dir = GridPoint::new(0, -1);
+
+        while grid.index(&curr_pos).is_some() {
+            if !found_pos.insert((curr_pos, curr_dir)) {
+                possible_obstacles += 1;
+                continue 'obstacle;
+            }
+            let next_pos = curr_pos.add(&curr_dir);
+            if next_pos == obstacle_pos || *grid.index(&next_pos).unwrap_or(&' ') == '#' {
+                curr_dir = curr_dir.turn_trigo();
+            } else {
+                curr_pos = next_pos;
+            }
+        }
+    }
+    println!("{}", possible_obstacles);
+}
+
+fn positions_on_path(grid: &Grid<char>) -> HashSet<GridPoint> {
+    let start_pos = grid.find_point('^').unwrap();
+
+    let mut found_pos = HashSet::<GridPoint>::new();
+    let mut curr_pos = start_pos;
+    let mut curr_dir = GridPoint::new(0, -1);
+
+    while grid.index(&curr_pos).is_some() {
+        found_pos.insert(curr_pos);
+        let next_pos = curr_pos.add(&curr_dir);
+        if *grid.index(&next_pos).unwrap_or(&' ') == '#' {
+            curr_dir = curr_dir.turn_trigo();
+        } else {
+            curr_pos = next_pos;
+        }
+    }
+    found_pos
+}
+
+pub fn run1() {
+    let grid = Grid::from_str(&read_day_input!());
+
+    let start_pos = grid.find_point('^').unwrap();
+
+    let found_pos = positions_on_path(&grid);
+    println!("{}", found_pos.len());
 }

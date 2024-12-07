@@ -29,7 +29,7 @@ pub fn run() {
         .map(|l| l.split(",").collect::<Vec<&str>>())
         .filter(|files| {
             for (i, e1) in files.iter().enumerate() {
-                for j in (i + 1..files.len()) {
+                for j in i + 1..files.len() {
                     let ok = match orderings.get(*e1) {
                         Some(v) => v.contains(files[j]),
                         None => false,
@@ -91,7 +91,7 @@ pub fn run1() {
         .map(|l| l.split(",").collect::<Vec<&str>>())
         .filter(|files| {
             for (i, e1) in files.iter().enumerate() {
-                for j in (i + 1..files.len()) {
+                for j in i + 1..files.len() {
                     let ok = match orderings.get(*e1) {
                         Some(v) => v.contains(files[j]),
                         None => false,

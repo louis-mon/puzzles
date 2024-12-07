@@ -1,3 +1,3 @@
 fn main() {
-    rust::aoc::a2024::d06::run();
+    rust::aoc::a2024::d04::run();
 }

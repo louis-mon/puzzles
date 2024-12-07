@@ -1,7 +1,6 @@
 use crate::aoc::common::input::parse_int;
 use crate::read_day_input;
 use regex::Regex;
-use std::fs;
 
 pub fn run() {
     println!("{}", solve(read_day_input!()));

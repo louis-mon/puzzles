@@ -1,6 +1,5 @@
 use crate::aoc::common::input::parse_int;
 use crate::read_day_input;
-use std::fs;
 
 pub fn run() {
     println!("{}", solve(parse_input(&read_day_input!())))
@@ -44,7 +43,7 @@ fn is_safe(line: &[i32]) -> bool {
     for i in 1..line.len() {
         let diff = line[i] - line[i - 1];
         let diff_abs = diff.abs();
-        if (diff_abs > 3 || diff.signum() != s) {
+        if diff_abs > 3 || diff.signum() != s {
             return false;
         }
     }

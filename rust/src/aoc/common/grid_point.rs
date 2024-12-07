@@ -1,11 +1,11 @@
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Hash, Eq, PartialEq)]
 pub struct GridPoint {
     pub x: i32,
     pub y: i32,
 }
 
 impl GridPoint {
-    pub fn new(x: i32, y: i32) -> GridPoint {
+    pub const fn new(x: i32, y: i32) -> GridPoint {
         GridPoint { x, y }
     }
 
@@ -16,10 +16,32 @@ impl GridPoint {
         }
     }
 
+    pub fn linear(&self, width: i32) -> i32 {
+        self.x + width * self.y
+    }
+
     pub fn add(&self, p2: &Self) -> Self {
         GridPoint {
             x: self.x + p2.x,
             y: self.y + p2.y,
         }
     }
+
+    pub fn turn_trigo(&self) -> Self {
+        GridPoint {
+            x: -self.y,
+            y: self.x,
+        }
+    }
 }
+
+pub const DIRECTIONS_8: [GridPoint; 8] = [
+    GridPoint::new(1, 0),
+    GridPoint::new(1, 1),
+    GridPoint::new(0, 1),
+    GridPoint::new(-1, 1),
+    GridPoint::new(-1, 0),
+    GridPoint::new(-1, -1),
+    GridPoint::new(0, -1),
+    GridPoint::new(1, -1),
+];
