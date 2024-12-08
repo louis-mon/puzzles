@@ -16,8 +16,10 @@ pub mod aoc {
         pub mod d05;
         pub mod d06;
         pub mod d07;
+        pub mod d08;
     }
     pub mod common {
+        pub mod algo;
         pub mod grid;
         pub mod grid_point;
         pub mod input;

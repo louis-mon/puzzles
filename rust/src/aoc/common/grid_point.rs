@@ -27,6 +27,20 @@ impl GridPoint {
         }
     }
 
+    pub fn sub(&self, p: &Self) -> Self {
+        GridPoint {
+            x: self.x - p.x,
+            y: self.y - p.y,
+        }
+    }
+
+    pub fn scale(&self, s: i32) -> Self {
+        GridPoint {
+            x: self.x * s,
+            y: self.y * s,
+        }
+    }
+
     pub fn turn_trigo(&self) -> Self {
         GridPoint {
             x: -self.y,
