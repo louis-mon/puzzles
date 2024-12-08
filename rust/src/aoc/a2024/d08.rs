@@ -1,4 +1,4 @@
-use crate::aoc::common::algo::group_by_key;
+use crate::aoc::common::algo::GroupBy;
 use crate::aoc::common::grid::Grid;
 use crate::aoc::common::grid_point::GridPoint;
 use crate::read_day_input;
@@ -12,11 +12,11 @@ pub fn run() {
 }
 
 fn solve(grid: Grid<char>) -> i32 {
-    let grouped = group_by_key(
-        grid.iter_points()
-            .filter(|x| *x.1 != '.')
-            .map(|(a, b)| (*b, a)),
-    );
+    let grouped = grid
+        .iter_points()
+        .filter(|x| *x.1 != '.')
+        .map(|(a, b)| (*b, a))
+        .group_by_key();
     let mut found: HashSet<GridPoint> = HashSet::new();
 
     for (_, point_list) in grouped {
@@ -43,11 +43,11 @@ fn allowed_range(m: i32, a: i32, b: i32) -> RangeInclusive<i32> {
 }
 
 fn solve2(grid: Grid<char>) -> i32 {
-    let grouped = group_by_key(
-        grid.iter_points()
-            .filter(|x| *x.1 != '.')
-            .map(|(a, b)| (*b, a)),
-    );
+    let grouped = grid
+        .iter_points()
+        .filter(|x| *x.1 != '.')
+        .map(|(a, b)| (*b, a))
+        .group_by_key();
     let mut found: HashSet<GridPoint> = HashSet::new();
 
     for (_, point_list) in grouped {

@@ -1,4 +1,4 @@
-use crate::aoc::common::algo::group_by_key;
+use crate::aoc::common::algo::GroupBy;
 use crate::aoc::common::input::{parse_int, split_2, split_2_str, to_tuple2, to_tuple2_str};
 use crate::read_day_input;
 use std::collections::{HashMap, HashSet};
@@ -8,11 +8,13 @@ pub fn run() {
     let input = read_day_input!();
 
     let (orderings, print_list) = split_2(&input, "\n\n");
-    let orderings: HashMap<String, HashSet<String>> =
-        group_by_key(orderings.lines().map(|l| split_2_str(l, "|")))
-            .into_iter()
-            .map(|(k, v)| (k, v.into_iter().collect::<HashSet<String>>()))
-            .collect();
+    let orderings: HashMap<String, HashSet<String>> = orderings
+        .lines()
+        .map(|l| split_2_str(l, "|"))
+        .group_by_key()
+        .into_iter()
+        .map(|(k, v)| (k, v.into_iter().collect::<HashSet<String>>()))
+        .collect();
 
     let in_wrong_order = print_list
         .lines()
@@ -70,11 +72,13 @@ pub fn run1() {
     let input = read_day_input!();
 
     let (orderings, print_list) = to_tuple2(input.split("\n\n"));
-    let orderings: HashMap<String, HashSet<String>> =
-        group_by_key(orderings.lines().map(|l| to_tuple2_str(l.split("|"))))
-            .into_iter()
-            .map(|(k, v)| (k, v.into_iter().collect::<HashSet<String>>()))
-            .collect();
+    let orderings: HashMap<String, HashSet<String>> = orderings
+        .lines()
+        .map(|l| to_tuple2_str(l.split("|")))
+        .group_by_key()
+        .into_iter()
+        .map(|(k, v)| (k, v.into_iter().collect::<HashSet<String>>()))
+        .collect();
 
     let res: i32 = print_list
         .lines()
