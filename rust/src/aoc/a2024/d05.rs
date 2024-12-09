@@ -51,11 +51,10 @@ pub fn run() {
 
             let mut res: Vec<&str> = Vec::new();
             while !files_set.is_empty() {
-                let next = files_set
+                let next = *files_set
                     .iter()
                     .find(|v| succ.get(*v).unwrap().is_empty())
-                    .unwrap()
-                    .clone();
+                    .unwrap();
                 res.push(next);
                 succ.values_mut().for_each(|v| {
                     v.remove(next);
