@@ -15,7 +15,15 @@ pub fn parse_int(s: &str) -> i32 {
     s.parse().unwrap()
 }
 
+pub fn parse_f64(s: &str) -> f64 {
+    s.parse().unwrap()
+}
+
 pub fn parse_long(s: &str) -> i64 {
+    s.parse().unwrap()
+}
+
+pub fn parse_u128(s: &str) -> u128 {
     s.parse().unwrap()
 }
 

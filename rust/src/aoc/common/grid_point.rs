@@ -16,6 +16,16 @@ impl GridPoint {
         }
     }
 
+    pub fn from_char(c: char) -> Option<GridPoint> {
+        match c {
+            '^' => Some(GridPoint::new(0, -1)),
+            '>' => Some(GridPoint::new(1, 0)),
+            'v' => Some(GridPoint::new(0, 1)),
+            '<' => Some(GridPoint::new(-1, 0)),
+            _ => None,
+        }
+    }
+
     pub fn linear(&self, width: i32) -> i32 {
         self.x + width * self.y
     }
@@ -58,4 +68,11 @@ pub const DIRECTIONS_8: [GridPoint; 8] = [
     GridPoint::new(-1, -1),
     GridPoint::new(0, -1),
     GridPoint::new(1, -1),
+];
+
+pub const DIRECTIONS_4: [GridPoint; 4] = [
+    GridPoint::new(1, 0),
+    GridPoint::new(0, 1),
+    GridPoint::new(-1, 0),
+    GridPoint::new(0, -1),
 ];
