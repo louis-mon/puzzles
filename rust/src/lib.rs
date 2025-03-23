@@ -24,6 +24,16 @@ pub mod aoc {
         pub mod d13;
         pub mod d14;
         pub mod d15;
+        pub mod d16;
+        pub mod d17;
+        pub mod d18;
+        pub mod d19;
+        pub mod d20;
+        pub mod d21;
+        pub mod d22;
+        pub mod d23;
+        pub mod d24;
+        pub mod d25;
     }
     pub mod common {
         pub mod algo;
@@ -31,6 +41,10 @@ pub mod aoc {
         pub mod grid_point;
         pub mod input;
     }
+}
+
+pub mod euler {
+    pub mod p0932;
 }
 
 mod exercises {

@@ -1,3 +1,5 @@
+use crate::aoc::common::input::{parse_int, split_2};
+
 #[derive(Copy, Clone, Debug, Hash, Eq, PartialEq)]
 pub struct GridPoint {
     pub x: i32,
@@ -14,6 +16,15 @@ impl GridPoint {
             x: i % width,
             y: i / width,
         }
+    }
+
+    pub fn within_rect(&self, l: i32, t: i32, r: i32, b: i32) -> bool {
+        self.x >= l && self.x < r && self.y >= t && self.y < b
+    }
+
+    pub fn from_str_coord(s: &str) -> GridPoint {
+        let (x, y) = split_2(s, ",");
+        GridPoint::new(parse_int(x), parse_int(y))
     }
 
     pub fn from_char(c: char) -> Option<GridPoint> {
